@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+    <head ><h1 id="header">Note Taking App</h1>
+         <head><script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="NotesApp.css">
+    </head>
+<body >
+        <div id="controls">
+            <img src="add_note-512.png"   onclick="obj.createNote()">      
+
+
+            <img src="delete.jpg"   onclick="obj.displayTrash()">
+       </div>   
+  <br>
+    
+    <br>
+    Notes
+    <div id = 'notes-container'>
+        <ul id="notes"></ul>
+       </div>
+    <br>
+    
+    <br>
+    Trash 
+    <div id = 'trash-container'>
+        <ul id="trash"></ul>
+       </div>
+    
+<script type = "text/javascript" src="NotesAppJs.js">    </script>
+    
+</body>
+</html>
