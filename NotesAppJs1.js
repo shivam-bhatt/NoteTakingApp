@@ -11,18 +11,19 @@
          this.body = body;
          this.imgDataUrl = imgDataUrl;
          var currentdate = new Date();
-         this.datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() +                 ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+         this.datetime = currentdate.getDay() + "-" + currentdate.getMonth() + "-" + currentdate.getFullYear() + " @ " + currentdate.getHours() +                 ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
      }
 
      // create a new note
      obj.createNote = function() {
+         var n = new Note();
          
          var notes = document.getElementById('new-note');
          var note = document.createElement('li');
 
          var idGenerator = new Note();
          var id = idGenerator.datetime;
-         note.innerHTML += "<div class='create-note' id = '" + id + "'><img id='blah' src='#' alt='your image' height = '150' width = '300'><textarea     class='note-title' placeholder='Untitled' maxlength='10'></textarea><textarea class='note-content' placeholder='Your content here'></textarea><img class='delete-note' src='images.jpg' height='20' width='20'><input type = 'submit' value = 'save'><input type  = 'file' class = 'upload-file'></div>";
+         note.innerHTML += "<div class='create-note' id = '" + id + "'><img id='blah' src='#' alt='your image' height = '150' width = '300'><textarea     class='note-title' placeholder='Untitled' maxlength='10'></textarea><textarea class='note-content' placeholder='Your content here'></textarea><img class='delete-note' src='images.jpg' height='20' width='20'><br/><input type = 'submit' value = 'save'><input type  = 'file' class = 'upload-file'></div>";
 
          notes.appendChild(note);
 
@@ -49,7 +50,7 @@
          for (var j = 0; j < notesArray.length; j++) {
              var id = notesArray[j].id;
              var note = document.createElement('li');
-             note.innerHTML += "<div class='create-note' id = '" + notesArray[j].id + "'><img src =" + notesArray[j].imgDataUrl + " height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + notesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + notesArray[j].body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + notesArray[j].datetime + "</I><br/><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'></div>";
+             note.innerHTML += "<div class='create-note' id = '" + notesArray[j].id + "'><img src =" + notesArray[j].imgDataUrl + " height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + notesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + notesArray[j].body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + notesArray[j].datetime + "</I><br/><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'><br/><input type  = 'file' class = 'upload-file' onchange = 'obj.readURL(this)'></div>";
              notes.appendChild(note);
          }
      }
@@ -61,7 +62,7 @@
              var id = trashNotesArray[j].id;
              var note = document.createElement('li');
 
-             note.innerHTML += "<div class='trash-note' id = '" + trashNotesArray[j].id + "'><img src ='" + trashNotesArray[j].imgDataUrl + "' alt='your image' height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10' >" + trashNotesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + trashNotesArray[j].body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteTrashNote(this)'><br /><input type = 'submit' value = 'restore' onclick = 'obj.restoreNote(this)'><br /><I>" + trashNotesArray[j].datetime + "</I></div>";
+             note.innerHTML += "<div class='trash-note' id = '" + trashNotesArray[j].id + "'><img src ='" + trashNotesArray[j].imgDataUrl + "' alt='your image' height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10' >" + trashNotesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + trashNotesArray[j].body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteTrashNote(this)'><br/><input type = 'submit' value = 'restore' onclick = 'obj.restoreNote(this)'><br /><I>" + trashNotesArray[j].datetime + "</I><input type  = 'file' class = 'upload-file' onchange = 'obj.readURL(this)'></div>";
              trashNotes.appendChild(note);
          }
 
@@ -81,8 +82,9 @@
          
          
          var note = document.createElement('li');
-         note.innerHTML = "<div class='create-note' id = '" + id + "'><img src = '" + imageDataUrl + "' alt='your image' height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + title + "</textarea><textarea class='note-content' placeholder='Your content here'></textarea>" + body + "<img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + noteObject.datetime + "</I><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'></div>";
+        // note.innerHTML = "<div class='create-note' id = '" + id + "'><img src = '" + imageDataUrl + "' alt='your image' height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + title + "</textarea><textarea class='note-content' placeholder='Your content here'></textarea>" + body + "<img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + noteObject.datetime + "</I><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'><input type  = 'file' class = 'upload-file' onchange = 'obj.readURL(this)'></div>";
 
+         note.innerHTML += "<div class='create-note' id = '" + id + "'><img src =" + imageDataUrl + " height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + noteObject.datetime + "</I><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'><input type  = 'file' class = 'upload-file' onchange = 'obj.readURL(this)'></div>";
          var notesArray = getNotes();
          
          if (dublicay(id) == true) {           
@@ -220,7 +222,20 @@
          }
      }
 
+ obj.expiryCheck = function()
+     {
+     var dateTimeToday = new Date();
+          var allNotesArray = getNotes();
+         for (var i = 0; i < allNotesArray.length; i++) {
+             var dateCreated = allNotesArray[i].datetime.split(/[-@]/);
+             var d1 = parseInt(allNotesArray[2]*365 + allNotesArray[1]*30 + allNotesArray[0]);
+             var d2 = parseInt(dateTimeToday.getFullYear()*365 + dateTimeToday.getMonth()*30 + dateTimeToday.getDay());
+             console.log(d1-d2);
 
+         }
+         
+     }
 
  })();
  obj.displayNotes();
+obj.expiryCheck();

@@ -7,15 +7,15 @@
     </head>
 <body >
         <div id="controls">
-            <img src="add_note-512.png"   onclick="obj.createNote()">      
-
-
-            <img src="delete.jpg"   onclick="obj.displayTrash()">
+            <img src="add_note-512.png" height="100" width="100"  onclick="obj.createNote()">      
+            <img src="delete.jpg"  height="100" width="100" onclick="obj.displayTrash()">
        </div>   
   <br>
     
     <br>
-    Notes
+<div id = 'add-a-new-note'>
+    <ul id="new-note"></ul>
+    </div>
     <div id = 'notes-container'>
         <ul id="notes"></ul>
        </div>
@@ -27,7 +27,8 @@
         <ul id="trash"></ul>
        </div>
     
-<script type = "text/javascript" src="NotesAppJs.js">    </script>
-    
-</body>
+<script type = "text/javascript" src="NotesAppJs1.js">    
+</script>
+        </body>
+    </head>
 </html>
