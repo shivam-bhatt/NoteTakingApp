@@ -11,18 +11,27 @@
          this.body = body;
          this.imgDataUrl = imgDataUrl;
          var currentdate = new Date();
-         this.datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() +                 ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+         this.currentdate = new Date();
+         this.dateTime = (currentdate.getMonth()+1) + "/" + currentdate.getDate() +  "/" + currentdate.getFullYear() + " " + currentdate.getHours() +                 ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+     }
+     
+     //hiding choose file button and performing its operation
+     obj.addFile = function(element)
+     {
+         element.parentElement.getElementsByTagName('input')[2].click();
      }
 
      // create a new note
      obj.createNote = function() {
+         var n = new Note();
          
          var notes = document.getElementById('new-note');
          var note = document.createElement('li');
 
          var idGenerator = new Note();
-         var id = idGenerator.datetime;
-         note.innerHTML += "<div class='create-note' id = '" + id + "'><img id='blah' src='#' alt='your image' height = '150' width = '300'><textarea     class='note-title' placeholder='Untitled' maxlength='10'></textarea><textarea class='note-content' placeholder='Your content here'></textarea><img class='delete-note' src='images.jpg' height='20' width='20'><input type = 'submit' value = 'save'><input type  = 'file' class = 'upload-file'></div>";
+         var id = idGenerator.dateTime;
+         note.innerHTML += "<div class='create-note' id = '" + id + "'><img id='blah'><img class='delete-note' src='delete.png' height='20' width='20' ><textarea     class='note-title' placeholder='Untitled' maxlength='10'></textarea><textarea class='note-content' placeholder='Your content here'></textarea><br><br><br><br><input type = 'submit' class = 'save-btn' value = 'save'><input type  = 'button' class = 'upload-file' onclick = 'obj.addFile(this)' value = 'add file'><input type  = 'file' class = 'upload-file' onchange = 'obj.readURL(this)' style = 'height:0px;overflow:hidden'></div>";
 
          notes.appendChild(note);
 
@@ -36,9 +45,9 @@
          removeNote.onclick = function() {
              notes.removeChild(note);
          };
+         
+         
 
-         var chooseFileButton = note.getElementsByClassName('upload-file')[0];
-         chooseFileButton.setAttribute('onchange', 'obj.readURL(this)');
      }
 
      //display all notes created and saved
@@ -47,21 +56,36 @@
          var notesArray = getNotes();
 
          for (var j = 0; j < notesArray.length; j++) {
-             var id = notesArray[j].id;
              var note = document.createElement('li');
-             note.innerHTML += "<div class='create-note' id = '" + notesArray[j].id + "'><img src =" + notesArray[j].imgDataUrl + " height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + notesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + notesArray[j].body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + notesArray[j].datetime + "</I><br/><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'></div>";
-             notes.appendChild(note);
+             var id = notesArray[j].id;
+             if(notesArray[j].imgDataUrl == null || notesArray[j].imgDataUrl == "null")
+                 {
+                     note.innerHTML += "<div class='create-note' id = '" + notesArray[j].id + "'><img class='insert-image' src =" + notesArray[j].imgDataUrl + " style='display:none'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + notesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + notesArray[j].body + "</textarea><img class='delete-note' src='delete.png' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><br/><br/><input type = 'submit' class='save-btn' value ='save' onclick = 'obj.saveNote(this)'><input type ='button' value='add file' class='upload-file' onclick='obj.addFile(this)'><input type='file' class='upload-file' onchange='obj.readURL(this)' style='height:0px;overflow:hidden'><I>" + notesArray[j].dateTime + "</I></div>";
+                 }
+             else
+                 {
+             note.innerHTML += "<div class='create-note' id = '" + notesArray[j].id + "'><img class = 'insert-image' src =" + notesArray[j].imgDataUrl + " height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + notesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + notesArray[j].body + "</textarea><img class='delete-note' src='delete.png' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><input type = 'submit' class='save-btn' value = 'save' onclick = 'obj.saveNote(this)'><input type  = 'button' class = 'upload-file' value = 'add file' onclick = 'obj.addFile(this)'><input type  = 'file' class = 'upload-file' onchange = 'obj.readURL(this)' style = 'height:0px;overflow:hidden'><br><br><I>" + notesArray[j].dateTime + "</I></div>";
+                 }
+                          notes.appendChild(note);
          }
      }
 
      obj.displayTrash = function() {
          var trashNotes = document.getElementById('trash');
          var trashNotesArray = getTrashNotes();
-         for (var j = 0; j < trashNotesArray.length; j++) {
+         for (var j = 0; j < trashNotesArray.length; j++) {             
              var id = trashNotesArray[j].id;
              var note = document.createElement('li');
-
-             note.innerHTML += "<div class='trash-note' id = '" + trashNotesArray[j].id + "'><img src ='" + trashNotesArray[j].imgDataUrl + "' alt='your image' height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10' >" + trashNotesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + trashNotesArray[j].body + "</textarea><img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteTrashNote(this)'><br /><input type = 'submit' value = 'restore' onclick = 'obj.restoreNote(this)'><br /><I>" + trashNotesArray[j].datetime + "</I></div>";
+             if(trashNotesArray[j].imgDataUrl == "null" || trashNotesArray[j].imgDataUrl == null)
+                 {
+                    
+                     note.innerHTML += "<div class='create-note' id = '" + trashNotesArray[j].id + "'><img class='insert-image' src='" + trashNotesArray[j].imgDataUrl + "' style='display:none'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + trashNotesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + trashNotesArray[j].body + "</textarea><img class='delete-note' src='delete.png' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + trashNotesArray[j].dateTime + "</I><br/><input type = 'submit' class = 'save-btn' value = 'restore' onclick = 'obj.restoreNote(this)'></div>";
+                 }
+             else
+                 {
+                     
+             note.innerHTML += "<div class='create-note' id = '" + trashNotesArray[j].id + "'><img class = 'insert-image' src =" + trashNotesArray[j].imgDataUrl + " height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + trashNotesArray[j].title + "</textarea><textarea class='note-content' placeholder='Your content here'>" + trashNotesArray[j].body + "</textarea><img class='delete-note' src='delete.png' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + trashNotesArray[j].dateTime + "</I><br/><input type = 'submit' class = 'save-btn' value = 'restore' onclick = 'obj.restoreNote(this)'></div>";
+                 }
              trashNotes.appendChild(note);
          }
 
@@ -78,11 +102,7 @@
          var body = oldNote.getElementsByClassName('note-content')[0].value.toString();
          var imageDataUrl = oldNote.getElementsByTagName('img')[0].getAttribute('src');
          var noteObject = new Note(id, title, body, imageDataUrl);
-         
-         
          var note = document.createElement('li');
-         note.innerHTML = "<div class='create-note' id = '" + id + "'><img src = '" + imageDataUrl + "' alt='your image' height = '150' width = '300'><textarea class='note-title' placeholder='Untitled' maxlength='10'>" + title + "</textarea><textarea class='note-content' placeholder='Your content here'></textarea>" + body + "<img class='delete-note' src='images.jpg' height='20' width='20' onclick = 'obj.deleteNote(this)'><br /><I>" + noteObject.datetime + "</I><input type = 'submit' value = 'save' onclick = 'obj.saveNote(this)'></div>";
-
          var notesArray = getNotes();
          
          if (dublicay(id) == true) {           
@@ -95,7 +115,8 @@
          }
          
          localStorage.setItem('note', JSON.stringify(notesArray));
-
+         location.reload();
+        obj.displayNotes();
      }
 
      //restore note from trash
@@ -183,10 +204,9 @@
              reader.onload = function(e) {
                  var image = input.parentElement.getElementsByTagName('img')[0];
                  image.setAttribute('src', e.target.result);
-                 image.setAttribute('width', '50');
-                 image.setAttribute('heigth', '300');
+                 image.setAttribute('width', '280');
+                 image.setAttribute('height', '150');
              };
-
              reader.readAsDataURL(input.files[0]);
          }
      }
@@ -220,7 +240,21 @@
          }
      }
 
-
+ obj.expiryCheck = function()
+     {
+          var trashNotesArray = getTrashNotes();
+         for (var i = 0; i < trashNotesArray.length; i++) {
+             var createdDate = new Date(trashNotesArray[i].dateTime);
+             var currentDate = new Date();
+             if((currentDate.getTime()-createdDate.getTime())/60000 > 3)
+                 {
+                     trashNotesArray.splice(i, 1);
+                 }
+         }
+     localStorage.setItem('trash', JSON.stringify(trashNotesArray));
+         
+     }
 
  })();
  obj.displayNotes();
+obj.expiryCheck();

@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html>
 
-    <head ><h1 id="header">Note Taking App</h1>
-         <head><script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-     <link rel="stylesheet" type="text/css" href="NotesApp.css">
-    </head>
+    <head >
+         <meta charset="utf-8">
+         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="NotesApp.css">   
+        </head>
 <body >
-        <div id="controls">
-            <img src="add_note-512.png" height="100" width="100"  onclick="obj.createNote()">      
-            <img src="delete.jpg"  height="100" width="100" onclick="obj.displayTrash()">
-       </div>   
+    <nav class="navbar navbar-default navbar-static-top"><h1>Notes Taking App</h1>
+    <ul class="nav navbar-nav navbar-right">
+    <li><a class="navbar-brand" onclick="obj.displayTrash()">Display Trash</a></li>
+        </ul>
+    </nav>
+    <div id="controls" class = 'container'>
+    
+    </div>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+        <div id="controls" class = 'container'>
+            <div class="row">
+            <center><img src="addNote.png" height="200" width="200"  alt = "Add a new Note" onclick="obj.createNote()" align="middle"></center>  
+            </div>
+    </div>
   <br>
     
     <br>
-<div id = 'add-a-new-note'>
+<div id = 'add-a-new-note' class = 'container'>
     <ul id="new-note"></ul>
     </div>
-    <div id = 'notes-container'>
+    <div id = 'notes-container' >
         <ul id="notes"></ul>
        </div>
     <br>
-    
-    <br>
-    Trash 
-    <div id = 'trash-container'>
+    Trash-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   <div id = 'trash-container' class = 'container'>
         <ul id="trash"></ul>
        </div>
+    <br>
+
     
 <script type = "text/javascript" src="NotesAppJs1.js">    
 </script>
         </body>
-    </head>
 </html>
